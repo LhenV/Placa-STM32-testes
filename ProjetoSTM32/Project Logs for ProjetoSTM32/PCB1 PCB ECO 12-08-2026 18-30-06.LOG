@@ -1,0 +1,8 @@
+Removed Pin From Net: NetName=Estimulante Pin=STM1-27
+Added Pin To Net: NetName=Estimulante Pin=STM1-61
+Added Rule: Name=Schematic Supply Nets
+Added Rule: Name=Schematic Supply Nets_1
+Added Rule: Name=Schematic Supply Nets_2
+Added Rule: Name=Schematic Supply Nets_3
+Added Rule: Name=Schematic Supply Nets_4
+Added Rule: Name=Schematic Supply Nets_5

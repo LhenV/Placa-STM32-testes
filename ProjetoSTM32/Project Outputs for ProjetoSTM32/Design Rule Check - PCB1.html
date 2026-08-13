@@ -1,0 +1,771 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
+			padding: 0.3em;
+		}
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
+		}
+
+		body {
+			font-family : segoe ui;
+		}
+
+		td, th {
+			padding: 0.5em;
+			text-align : left;
+			width: 10em;
+		}
+		th {
+			background-color : #EEEEEE;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+			font-size: 0.9em;
+		}
+
+		.DRC_summary_header {
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 9em;
+		}
+
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
+		}
+
+
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.front_matter_column1 {
+			width : 8em;
+			font-weight: bold;
+		}
+
+		.front_matter_column2 {
+			width: 0.1em;
+		}
+
+		.front_matter_column3 {
+			width : auto;
+		}
+
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : left;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #white;
+		}
+		tr.onmouseout_even { 
+			background-color : #FAFAFA;
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : #EEEEEE;
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #21489e;
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD25\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td class="column1">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">12/08/2026</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">21:07:05</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:00</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc" class="file"><acronym title="C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc">C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td class="column2">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">133</td></tr>
+</table>
+</td>
+</table><a name="IDEGLHXK53MCDIKUWJDOHZLIV0MKOREXROM4OAGLL4GYAP4BXLFFHK"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDODYMKPW5AYF1HRN5D5Z1HPALVBD4SMABYQZGLNJXW5CB5KPVMY4E">Clearance Constraint (Gap=0.127mm) (All),(All)</a></td>
+<td class="column2">2</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDG3URSVFOBSCGI1NTRS4VV23DN1K544ZFG3OZZK10M5SNVAMX1AN">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">3</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDACASEYWMUX21M1TUQEKVN4O0FG45R5KWD3E4ULOCEWDZZPXTZ1IG">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">4</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDDFFIIB2WTO02JWZD3Q4PPGUFDEU20KODFLI5VVNRC4DLMFLDMJT">Modified Polygon (Allow modified: No), (Allow shelved: No)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAISXOIYPHOI4GA5N5VUPIMD3RBFMIFXUX4BG5VFOS43CPFNE0BQF">Width Constraint (Min=0.127mm) (Max=25.4mm) (Preferred=0.2mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDLPNIP3JLIO41J2NFPU3XC3BXRDP0AIUFWN4UWIGUE3IGG2F3Z5TO">Routing Topology Rule(Topology=Shortest) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDGUVLMQPFTQUKGL423YLXUGYG1JOMFRQF40M4I4NKJUKRFIFGKYVC">Power Plane Connect Rule(Direct Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (InPadClass('PowerPads'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDDKU0V00JBOWSLFUTNVLQRYV2UKIXTMLNLDQRSYCMOSYMJATXH5XE">Power Plane Connect Rule(Relief Connect )(Expansion=0.3mm) (Conductor Width=0.127mm) (Air Gap=0.127mm) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDKJ0KGUFKUYW5FJW43ONHGATYGMDPWHTQAAMJVHMOVMGMI5SEYFVJ">Minimum Annular Ring (Minimum=0.2mm) (All)</a></td>
+<td class="column2">16</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDQMCEF5NKNYEAJ3MB2VYWX4TI2MEELYY5HR1EBTCOYWJPBZTFD4JK">Hole Size Constraint (Min=0.3mm) (Max=6.3mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDN3CCTYNV3YL5BUSLAMWFJYZITIHBAH2PMCR0BOIRK0NXFF4XPACF">Hole To Hole Clearance (Gap=0.25mm) (All),(All)</a></td>
+<td class="column2">2</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDKIS0B1ROPS3OGS32DQDQF2XUTLKWWKD3YGL21YCSJ1RROLY5V1IK">Minimum Solder Mask Sliver (Gap=0.1mm) (All),(All)</a></td>
+<td class="column2">62</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDNBUAR5GUQAYFHFJRVY3QHYQ5SLAATEOQPZ2RPZNJKOOYIIVN212K">Silk To Solder Mask (Clearance=0.15mm) (IsPad),(All)</a></td>
+<td class="column2">40</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID2GKWYFODQJZTF13QNKD5A0UJWBBSQ1LRVIQJFOJ50NWYGB5FMJAG">Silk to Silk (Clearance=0mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID1I3XSHPR0Q23GGZNHTLUV1EAUJ0EGINGL0OMPGHZQGBEOXTHTONK">Net Antennae (Tolerance=0mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDKZ2OHYYJK3AMF53LOFHNJNHHVNRJCA03MF3DBWKTZIPA4J0G5N5B">Board Clearance Constraint (Gap=0mm) (All)</a></td>
+<td class="column2">4</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDTFWZUGXMMPRQLET1VDV3CX1JND4TCNRL3H1PBCEZSPN4JYL0R0JH">Height Constraint (Min=0mm) (Max=1816.048mm) (Prefered=12.7mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">133</td>
+</tr>
+</table><br><a name="IDODYMKPW5AYF1HRN5D5Z1HPALVBD4SMABYQZGLNJXW5CB5KPVMY4E"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Clearance Constraint (Gap=0.127mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1555.274mil|Location2.X=1562.836mil|Location1.Y=1056.219mil|Location2.Y=1063.781mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1555.274mil|Location2.X=1562.836mil|Location1.Y=1056.219mil|Location2.Y=1063.781mil|Absolute=True">Clearance Constraint: (Collision &lt; 0.25mm) Between Hole of Pad J1-(14.2mm,1.524mm) on Multi-Layer And Pad J1-S5(14.2mm,1.524mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1815.117mil|Location2.X=1822.678mil|Location1.Y=1056.219mil|Location2.Y=1063.781mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1815.117mil|Location2.X=1822.678mil|Location1.Y=1056.219mil|Location2.Y=1063.781mil|Absolute=True">Clearance Constraint: (Collision &lt; 0.25mm) Between Hole of Pad J1-(20.8mm,1.524mm) on Multi-Layer And Pad J1-S6(20.8mm,1.524mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDG3URSVFOBSCGI1NTRS4VV23DN1K544ZFG3OZZK10M5SNVAMX1AN"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Short-Circuit Constraint (Allowed=No) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1543.516mil|Location2.X=1574.594mil|Location1.Y=1044.461mil|Location2.Y=1075.539mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1543.516mil|Location2.X=1574.594mil|Location1.Y=1044.461mil|Location2.Y=1075.539mil|Absolute=True">Short-Circuit Constraint: Between Pad J1-(14.2mm,1.524mm) on Multi-Layer And Pad J1-S5(14.2mm,1.524mm) on Multi-Layer Location : [X = 39.6mm][Y = 26.924mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1803.358mil|Location2.X=1834.437mil|Location1.Y=1044.461mil|Location2.Y=1075.539mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1803.358mil|Location2.X=1834.437mil|Location1.Y=1044.461mil|Location2.Y=1075.539mil|Absolute=True">Short-Circuit Constraint: Between Pad J1-(20.8mm,1.524mm) on Multi-Layer And Pad J1-S6(20.8mm,1.524mm) on Multi-Layer Location : [X = 46.2mm][Y = 26.924mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1571.222mil|Location2.X=1588.304mil|Location1.Y=1887.639mil|Location2.Y=1904.723mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1571.222mil|Location2.X=1588.304mil|Location1.Y=1887.639mil|Location2.Y=1904.723mil|Absolute=True">Short-Circuit Constraint: Between Pad STM1-14(14.75mm,22.738mm) on Top Layer And Track (14.7mm,22.788mm)(14.75mm,22.738mm) on Top Layer Location : [X = 40.126mm][Y = 48.163mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDACASEYWMUX21M1TUQEKVN4O0FG45R5KWD3E4ULOCEWDZZPXTZ1IG"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Un-Routed Net Constraint ( (All) )</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1693.898mil|Location2.X=1899.921mil|Location1.Y=1283.15mil|Location2.Y=1357.284mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1693.898mil|Location2.X=1899.921mil|Location1.Y=1283.15mil|Location2.Y=1357.284mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad D4-1(18.25mm,8.3mm) on Top Layer And Pad C15-1(22.058mm,7.617mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1695.866mil|Location2.X=1839.567mil|Location1.Y=1019.646mil|Location2.Y=1100.354mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1695.866mil|Location2.X=1839.567mil|Location1.Y=1019.646mil|Location2.Y=1100.354mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-S3(18.7mm,1.524mm) on Top Layer And Pad J1-S6(20.8mm,1.524mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1538.386mil|Location2.X=1682.087mil|Location1.Y=1019.646mil|Location2.Y=1100.354mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1538.386mil|Location2.X=1682.087mil|Location1.Y=1019.646mil|Location2.Y=1100.354mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-S5(14.2mm,1.524mm) on Multi-Layer And Pad J1-S4(16.3mm,1.524mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1574.803mil|Location2.X=1584.646mil|Location1.Y=1891.26mil|Location2.Y=1901.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1574.803mil|Location2.X=1584.646mil|Location1.Y=1891.26mil|Location2.Y=1901.102mil|Absolute=True">Un-Routed Net Constraint: Track (14.7mm,22.788mm)(14.75mm,22.738mm) on Top Layer Dead Copper - Net Not Assigned.</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDKJ0KGUFKUYW5FJW43ONHGATYGMDPWHTQAAMJVHMOVMGMI5SEYFVJ"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Minimum Annular Ring (Minimum=0.2mm) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1055.438mil|Location2.X=1064.562mil|Location1.Y=2128.233mil|Location2.Y=2137.357mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1055.438mil|Location2.X=1064.562mil|Location1.Y=2128.233mil|Location2.Y=2137.357mil|Absolute=True">Minimum Annular Ring: (0.15mm &lt; 0.2mm) Via (1.524mm,28.448mm) from Top Layer to Bottom Layer (Annular Ring=0.15mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1395.438mil|Location2.X=1404.562mil|Location1.Y=1424.296mil|Location2.Y=1433.42mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1395.438mil|Location2.X=1404.562mil|Location1.Y=1424.296mil|Location2.Y=1433.42mil|Absolute=True">Minimum Annular Ring: (0.15mm &lt; 0.2mm) Via (10.16mm,10.668mm) from Top Layer to Bottom Layer (Annular Ring=0.15mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1400.438mil|Location2.X=1409.562mil|Location1.Y=1564.296mil|Location2.Y=1573.42mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1400.438mil|Location2.X=1409.562mil|Location1.Y=1564.296mil|Location2.Y=1573.42mil|Absolute=True">Minimum Annular Ring: (0.15mm &lt; 0.2mm) Via (10.287mm,14.224mm) from Top Layer to Bottom Layer (Annular Ring=0.15mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1500.438mil|Location2.X=1509.562mil|Location1.Y=1179.296mil|Location2.Y=1188.42mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1500.438mil|Location2.X=1509.562mil|Location1.Y=1179.296mil|Location2.Y=1188.42mil|Absolute=True">Minimum Annular Ring: (0.15mm &lt; 0.2mm) Via (12.827mm,4.445mm) from Top Layer to Bottom Layer (Annular Ring=0.15mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1590.438mil|Location2.X=1599.562mil|Location1.Y=1319.296mil|Location2.Y=1328.42mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1590.438mil|Location2.X=1599.562mil|Location1.Y=1319.296mil|Location2.Y=1328.42mil|Absolute=True">Minimum Annular Ring: (0.15mm &lt; 0.2mm) Via (15.113mm,8.001mm) from Top Layer to Bottom Layer (Annular Ring=0.15mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1605.438mil|Location2.X=1614.562mil|Location1.Y=1394.296mil|Location2.Y=1403.42mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1605.438mil|Location2.X=1614.562mil|Location1.Y=1394.296mil|Location2.Y=1403.42mil|Absolute=True">Minimum Annular Ring: (0.15mm &lt; 0.2mm) Via (15.494mm,9.906mm) from Top Layer to Bottom Layer (Annular Ring=0.15mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1680.438mil|Location2.X=1689.562mil|Location1.Y=1949.296mil|Location2.Y=1958.42mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1680.438mil|Location2.X=1689.562mil|Location1.Y=1949.296mil|Location2.Y=1958.42mil|Absolute=True">Minimum Annular Ring: (0.15mm &lt; 0.2mm) Via (17.399mm,24.003mm) from Top Layer to Bottom Layer (Annular Ring=0.15mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1680.438mil|Location2.X=1689.562mil|Location1.Y=1990.773mil|Location2.Y=1999.897mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1680.438mil|Location2.X=1689.562mil|Location1.Y=1990.773mil|Location2.Y=1999.897mil|Absolute=True">Minimum Annular Ring: (0.175mm &lt; 0.2mm) Via (17.399mm,25.019mm) from Top Layer to Bottom Layer (Annular Ring=0.175mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1719.116mil|Location2.X=1728.239mil|Location1.Y=1395.619mil|Location2.Y=1404.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1719.116mil|Location2.X=1728.239mil|Location1.Y=1395.619mil|Location2.Y=1404.743mil|Absolute=True">Minimum Annular Ring: (0.15mm &lt; 0.2mm) Via (18.381mm,9.94mm) from Top Layer to Bottom Layer (Annular Ring=0.15mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1865.438mil|Location2.X=1874.562mil|Location1.Y=1184.296mil|Location2.Y=1193.42mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1865.438mil|Location2.X=1874.562mil|Location1.Y=1184.296mil|Location2.Y=1193.42mil|Absolute=True">Minimum Annular Ring: (0.15mm &lt; 0.2mm) Via (22.098mm,4.572mm) from Top Layer to Bottom Layer (Annular Ring=0.15mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2004.336mil|Location2.X=2013.46mil|Location1.Y=1763.115mil|Location2.Y=1772.239mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2004.336mil|Location2.X=2013.46mil|Location1.Y=1763.115mil|Location2.Y=1772.239mil|Absolute=True">Minimum Annular Ring: (0.15mm &lt; 0.2mm) Via (25.626mm,19.274mm) from Top Layer to Bottom Layer (Annular Ring=0.15mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2008.66mil|Location2.X=2017.784mil|Location1.Y=1365.556mil|Location2.Y=1374.68mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2008.66mil|Location2.X=2017.784mil|Location1.Y=1365.556mil|Location2.Y=1374.68mil|Absolute=True">Minimum Annular Ring: (0.15mm &lt; 0.2mm) Via (25.736mm,9.176mm) from Top Layer to Bottom Layer (Annular Ring=0.15mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2240.438mil|Location2.X=2249.562mil|Location1.Y=1655.773mil|Location2.Y=1664.897mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2240.438mil|Location2.X=2249.562mil|Location1.Y=1655.773mil|Location2.Y=1664.897mil|Absolute=True">Minimum Annular Ring: (0.175mm &lt; 0.2mm) Via (31.623mm,16.51mm) from Top Layer to Bottom Layer (Annular Ring=0.175mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2250.438mil|Location2.X=2259.562mil|Location1.Y=1200.773mil|Location2.Y=1209.897mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2250.438mil|Location2.X=2259.562mil|Location1.Y=1200.773mil|Location2.Y=1209.897mil|Absolute=True">Minimum Annular Ring: (0.175mm &lt; 0.2mm) Via (31.877mm,4.953mm) from Top Layer to Bottom Layer (Annular Ring=0.175mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1233.66mil|Location2.X=1242.784mil|Location1.Y=1700.556mil|Location2.Y=1709.68mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1233.66mil|Location2.X=1242.784mil|Location1.Y=1700.556mil|Location2.Y=1709.68mil|Absolute=True">Minimum Annular Ring: (0.15mm &lt; 0.2mm) Via (6.051mm,17.685mm) from Top Layer to Bottom Layer (Annular Ring=0.15mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1375.438mil|Location2.X=1384.562mil|Location1.Y=1643.483mil|Location2.Y=1652.607mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1375.438mil|Location2.X=1384.562mil|Location1.Y=1643.483mil|Location2.Y=1652.607mil|Absolute=True">Minimum Annular Ring: (0.15mm &lt; 0.2mm) Via (9.652mm,16.235mm) from Top Layer to Bottom Layer (Annular Ring=0.15mm) On (Top Layer)</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDN3CCTYNV3YL5BUSLAMWFJYZITIHBAH2PMCR0BOIRK0NXFF4XPACF"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Hole To Hole Clearance (Gap=0.25mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1555.274mil|Location2.X=1562.836mil|Location1.Y=1056.219mil|Location2.Y=1063.781mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1555.274mil|Location2.X=1562.836mil|Location1.Y=1056.219mil|Location2.Y=1063.781mil|Absolute=True">Hole To Hole Clearance Constraint: (Collision &lt; 0.25mm) Between Pad J1-(14.2mm,1.524mm) on Multi-Layer And Pad J1-S5(14.2mm,1.524mm) on Multi-Layer Pad/Via Touching Holes</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1815.117mil|Location2.X=1822.678mil|Location1.Y=1056.219mil|Location2.Y=1063.781mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1815.117mil|Location2.X=1822.678mil|Location1.Y=1056.219mil|Location2.Y=1063.781mil|Absolute=True">Hole To Hole Clearance Constraint: (Collision &lt; 0.25mm) Between Pad J1-(20.8mm,1.524mm) on Multi-Layer And Pad J1-S6(20.8mm,1.524mm) on Multi-Layer Pad/Via Touching Holes</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDKIS0B1ROPS3OGS32DQDQF2XUTLKWWKD3YGL21YCSJ1RROLY5V1IK"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Minimum Solder Mask Sliver (Gap=0.1mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1647.997mil|Location2.X=1653.184mil|Location1.Y=1192.249mil|Location2.Y=1197.436mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1647.997mil|Location2.X=1653.184mil|Location1.Y=1192.249mil|Location2.Y=1197.436mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.099997mm (3.9369mil) &lt; 0.1mm (3.937mil)) Between Pad J1-1(16.2mm,4.199mm) on Top Layer And Pad J1-2(16.85mm,4.199mm) on Top Layer [Top Solder] Mask Sliver [0.1mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1724.769mil|Location2.X=1729.956mil|Location1.Y=1192.249mil|Location2.Y=1197.436mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1724.769mil|Location2.X=1729.956mil|Location1.Y=1192.249mil|Location2.Y=1197.436mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.099997mm (3.9369mil) &lt; 0.1mm (3.937mil)) Between Pad J1-4(18.15mm,4.199mm) on Top Layer And Pad J1-5(18.8mm,4.199mm) on Top Layer [Top Solder] Mask Sliver [0.1mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1824.178mil|Location2.X=1829.365mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1824.178mil|Location2.X=1829.365mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-1(21.25mm,22.738mm) on Top Layer And Pad STM1-2(20.75mm,22.738mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1647.013mil|Location2.X=1652.2mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1647.013mil|Location2.X=1652.2mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-10(16.75mm,22.738mm) on Top Layer And Pad STM1-11(16.25mm,22.738mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1666.698mil|Location2.X=1671.885mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1666.698mil|Location2.X=1671.885mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-10(16.75mm,22.738mm) on Top Layer And Pad STM1-9(17.25mm,22.738mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1627.328mil|Location2.X=1632.515mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1627.328mil|Location2.X=1632.515mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-11(16.25mm,22.738mm) on Top Layer And Pad STM1-12(15.75mm,22.738mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1607.643mil|Location2.X=1612.83mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1607.643mil|Location2.X=1612.83mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-12(15.75mm,22.738mm) on Top Layer And Pad STM1-13(15.25mm,22.738mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1587.958mil|Location2.X=1593.145mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1587.958mil|Location2.X=1593.145mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-13(15.25mm,22.738mm) on Top Layer And Pad STM1-14(14.75mm,22.738mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1568.273mil|Location2.X=1573.46mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1568.273mil|Location2.X=1573.46mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-14(14.75mm,22.738mm) on Top Layer And Pad STM1-15(14.25mm,22.738mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1548.588mil|Location2.X=1553.775mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1548.588mil|Location2.X=1553.775mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-15(14.25mm,22.738mm) on Top Layer And Pad STM1-16(13.75mm,22.738mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1804.493mil|Location2.Y=1809.68mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1804.493mil|Location2.Y=1809.68mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-17(11.762mm,20.75mm) on Top Layer And Pad STM1-18(11.762mm,20.25mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1784.808mil|Location2.Y=1789.995mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1784.808mil|Location2.Y=1789.995mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-18(11.762mm,20.25mm) on Top Layer And Pad STM1-19(11.762mm,19.75mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1765.123mil|Location2.Y=1770.31mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1765.123mil|Location2.Y=1770.31mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-19(11.762mm,19.75mm) on Top Layer And Pad STM1-20(11.762mm,19.25mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1804.493mil|Location2.X=1809.68mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1804.493mil|Location2.X=1809.68mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-2(20.75mm,22.738mm) on Top Layer And Pad STM1-3(20.25mm,22.738mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1745.438mil|Location2.Y=1750.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1745.438mil|Location2.Y=1750.625mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-20(11.762mm,19.25mm) on Top Layer And Pad STM1-21(11.762mm,18.75mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1725.753mil|Location2.Y=1730.94mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1725.753mil|Location2.Y=1730.94mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-21(11.762mm,18.75mm) on Top Layer And Pad STM1-22(11.762mm,18.25mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1706.068mil|Location2.Y=1711.255mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1706.068mil|Location2.Y=1711.255mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-22(11.762mm,18.25mm) on Top Layer And Pad STM1-23(11.762mm,17.75mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1686.383mil|Location2.Y=1691.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1686.383mil|Location2.Y=1691.57mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-23(11.762mm,17.75mm) on Top Layer And Pad STM1-24(11.762mm,17.25mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1666.698mil|Location2.Y=1671.885mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1666.698mil|Location2.Y=1671.885mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-24(11.762mm,17.25mm) on Top Layer And Pad STM1-25(11.762mm,16.75mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1647.013mil|Location2.Y=1652.2mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1647.013mil|Location2.Y=1652.2mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-25(11.762mm,16.75mm) on Top Layer And Pad STM1-26(11.762mm,16.25mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1627.328mil|Location2.Y=1632.515mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1627.328mil|Location2.Y=1632.515mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-26(11.762mm,16.25mm) on Top Layer And Pad STM1-27(11.762mm,15.75mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1607.643mil|Location2.Y=1612.83mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1607.643mil|Location2.Y=1612.83mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-27(11.762mm,15.75mm) on Top Layer And Pad STM1-28(11.762mm,15.25mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1587.958mil|Location2.Y=1593.145mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1587.958mil|Location2.Y=1593.145mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-28(11.762mm,15.25mm) on Top Layer And Pad STM1-29(11.762mm,14.75mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1568.273mil|Location2.Y=1573.46mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1568.273mil|Location2.Y=1573.46mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-29(11.762mm,14.75mm) on Top Layer And Pad STM1-30(11.762mm,14.25mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1784.808mil|Location2.X=1789.995mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1784.808mil|Location2.X=1789.995mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-3(20.25mm,22.738mm) on Top Layer And Pad STM1-4(19.75mm,22.738mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1548.588mil|Location2.Y=1553.774mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1548.588mil|Location2.Y=1553.774mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-30(11.762mm,14.25mm) on Top Layer And Pad STM1-31(11.762mm,13.75mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1528.902mil|Location2.Y=1534.09mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1428.489mil|Location2.X=1433.676mil|Location1.Y=1528.902mil|Location2.Y=1534.09mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-31(11.762mm,13.75mm) on Top Layer And Pad STM1-32(11.762mm,13.25mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1548.588mil|Location2.X=1553.775mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1548.588mil|Location2.X=1553.775mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-33(13.75mm,11.262mm) on Top Layer And Pad STM1-34(14.25mm,11.262mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1568.273mil|Location2.X=1573.46mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1568.273mil|Location2.X=1573.46mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-34(14.25mm,11.262mm) on Top Layer And Pad STM1-35(14.75mm,11.262mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1587.958mil|Location2.X=1593.145mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1587.958mil|Location2.X=1593.145mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-35(14.75mm,11.262mm) on Top Layer And Pad STM1-36(15.25mm,11.262mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1607.643mil|Location2.X=1612.83mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1607.643mil|Location2.X=1612.83mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-36(15.25mm,11.262mm) on Top Layer And Pad STM1-37(15.75mm,11.262mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1627.328mil|Location2.X=1632.515mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1627.328mil|Location2.X=1632.515mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-37(15.75mm,11.262mm) on Top Layer And Pad STM1-38(16.25mm,11.262mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1647.013mil|Location2.X=1652.2mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1647.013mil|Location2.X=1652.2mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-38(16.25mm,11.262mm) on Top Layer And Pad STM1-39(16.75mm,11.262mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1666.698mil|Location2.X=1671.885mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1666.698mil|Location2.X=1671.885mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-39(16.75mm,11.262mm) on Top Layer And Pad STM1-40(17.25mm,11.262mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1765.123mil|Location2.X=1770.31mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1765.123mil|Location2.X=1770.31mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-4(19.75mm,22.738mm) on Top Layer And Pad STM1-5(19.25mm,22.738mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1686.383mil|Location2.X=1691.57mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1686.383mil|Location2.X=1691.57mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-40(17.25mm,11.262mm) on Top Layer And Pad STM1-41(17.75mm,11.262mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1706.068mil|Location2.X=1711.255mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1706.068mil|Location2.X=1711.255mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-41(17.75mm,11.262mm) on Top Layer And Pad STM1-42(18.25mm,11.262mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1725.753mil|Location2.X=1730.94mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1725.753mil|Location2.X=1730.94mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-42(18.25mm,11.262mm) on Top Layer And Pad STM1-43(18.75mm,11.262mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1745.438mil|Location2.X=1750.625mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1745.438mil|Location2.X=1750.625mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-43(18.75mm,11.262mm) on Top Layer And Pad STM1-44(19.25mm,11.262mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1765.123mil|Location2.X=1770.31mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1765.123mil|Location2.X=1770.31mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-44(19.25mm,11.262mm) on Top Layer And Pad STM1-45(19.75mm,11.262mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1784.808mil|Location2.X=1789.995mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1784.808mil|Location2.X=1789.995mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-45(19.75mm,11.262mm) on Top Layer And Pad STM1-46(20.25mm,11.262mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1804.493mil|Location2.X=1809.68mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1804.493mil|Location2.X=1809.68mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-46(20.25mm,11.262mm) on Top Layer And Pad STM1-47(20.75mm,11.262mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1824.178mil|Location2.X=1829.365mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1824.178mil|Location2.X=1829.365mil|Location1.Y=1472.781mil|Location2.Y=1477.967mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-47(20.75mm,11.262mm) on Top Layer And Pad STM1-48(21.25mm,11.262mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1528.902mil|Location2.Y=1534.09mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1528.902mil|Location2.Y=1534.09mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-49(23.238mm,13.25mm) on Top Layer And Pad STM1-50(23.238mm,13.75mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1745.438mil|Location2.X=1750.625mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1745.438mil|Location2.X=1750.625mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-5(19.25mm,22.738mm) on Top Layer And Pad STM1-6(18.75mm,22.738mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1548.588mil|Location2.Y=1553.774mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1548.588mil|Location2.Y=1553.774mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-50(23.238mm,13.75mm) on Top Layer And Pad STM1-51(23.238mm,14.25mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1568.273mil|Location2.Y=1573.46mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1568.273mil|Location2.Y=1573.46mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-51(23.238mm,14.25mm) on Top Layer And Pad STM1-52(23.238mm,14.75mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1587.958mil|Location2.Y=1593.145mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1587.958mil|Location2.Y=1593.145mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-52(23.238mm,14.75mm) on Top Layer And Pad STM1-53(23.238mm,15.25mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1607.643mil|Location2.Y=1612.83mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1607.643mil|Location2.Y=1612.83mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-53(23.238mm,15.25mm) on Top Layer And Pad STM1-54(23.238mm,15.75mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1627.328mil|Location2.Y=1632.515mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1627.328mil|Location2.Y=1632.515mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-54(23.238mm,15.75mm) on Top Layer And Pad STM1-55(23.238mm,16.25mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1647.013mil|Location2.Y=1652.2mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1647.013mil|Location2.Y=1652.2mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-55(23.238mm,16.25mm) on Top Layer And Pad STM1-56(23.238mm,16.75mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1666.698mil|Location2.Y=1671.885mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1666.698mil|Location2.Y=1671.885mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-56(23.238mm,16.75mm) on Top Layer And Pad STM1-57(23.238mm,17.25mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1686.383mil|Location2.Y=1691.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1686.383mil|Location2.Y=1691.57mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-57(23.238mm,17.25mm) on Top Layer And Pad STM1-58(23.238mm,17.75mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1706.068mil|Location2.Y=1711.255mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1706.068mil|Location2.Y=1711.255mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-58(23.238mm,17.75mm) on Top Layer And Pad STM1-59(23.238mm,18.25mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1725.753mil|Location2.Y=1730.94mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1725.753mil|Location2.Y=1730.94mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-59(23.238mm,18.25mm) on Top Layer And Pad STM1-60(23.238mm,18.75mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1725.753mil|Location2.X=1730.94mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1725.753mil|Location2.X=1730.94mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-6(18.75mm,22.738mm) on Top Layer And Pad STM1-7(18.25mm,22.738mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1745.438mil|Location2.Y=1750.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1745.438mil|Location2.Y=1750.625mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-60(23.238mm,18.75mm) on Top Layer And Pad STM1-61(23.238mm,19.25mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1765.123mil|Location2.Y=1770.31mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1765.123mil|Location2.Y=1770.31mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-61(23.238mm,19.25mm) on Top Layer And Pad STM1-62(23.238mm,19.75mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1784.808mil|Location2.Y=1789.995mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1784.808mil|Location2.Y=1789.995mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-62(23.238mm,19.75mm) on Top Layer And Pad STM1-63(23.238mm,20.25mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1804.493mil|Location2.Y=1809.68mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1880.3mil|Location2.X=1885.487mil|Location1.Y=1804.493mil|Location2.Y=1809.68mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-63(23.238mm,20.25mm) on Top Layer And Pad STM1-64(23.238mm,20.75mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1706.068mil|Location2.X=1711.255mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1706.068mil|Location2.X=1711.255mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-7(18.25mm,22.738mm) on Top Layer And Pad STM1-8(17.75mm,22.738mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1686.383mil|Location2.X=1691.57mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1686.383mil|Location2.X=1691.57mil|Location1.Y=1924.591mil|Location2.Y=1929.778mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.05mm &lt; 0.1mm) Between Pad STM1-8(17.75mm,22.738mm) on Top Layer And Pad STM1-9(17.25mm,22.738mm) on Top Layer [Top Solder] Mask Sliver [0.05mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDNBUAR5GUQAYFHFJRVY3QHYQ5SLAATEOQPZ2RPZNJKOOYIIVN212K"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk To Solder Mask (Clearance=0.15mm) (IsPad),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2187.623mil|Location2.X=2194.778mil|Location1.Y=1704.052mil|Location2.Y=1711.207mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2187.623mil|Location2.X=2194.778mil|Location1.Y=1704.052mil|Location2.Y=1711.207mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.127mm &lt; 0.15mm) Between Pad BOOT-1(31mm,17.815mm) on Top Layer And Track (29.459mm,17.974mm)(30.117mm,17.974mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.127mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2246.166mil|Location2.X=2253.322mil|Location1.Y=1704.052mil|Location2.Y=1711.207mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2246.166mil|Location2.X=2253.322mil|Location1.Y=1704.052mil|Location2.Y=1711.207mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.127mm &lt; 0.15mm) Between Pad BOOT-1(31mm,17.815mm) on Top Layer And Track (31.883mm,17.974mm)(32.541mm,17.974mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.127mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1086.532mil|Location2.X=1091.468mil|Location1.Y=1364.461mil|Location2.Y=1369.398mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1086.532mil|Location2.X=1091.468mil|Location1.Y=1364.461mil|Location2.Y=1369.398mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad Btn1-1(2.815mm,10mm) on Top Layer And Text "R1" (2.261mm,8.814mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1113.501mil|Location2.X=1120.656mil|Location1.Y=1419.395mil|Location2.Y=1426.55mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1113.501mil|Location2.X=1120.656mil|Location1.Y=1419.395mil|Location2.Y=1426.55mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.127mm &lt; 0.15mm) Between Pad Btn1-1(2.815mm,10mm) on Top Layer And Track (2.974mm,10.883mm)(2.974mm,11.541mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.127mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1113.501mil|Location2.X=1120.656mil|Location1.Y=1360.851mil|Location2.Y=1368.007mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1113.501mil|Location2.X=1120.656mil|Location1.Y=1360.851mil|Location2.Y=1368.007mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.127mm &lt; 0.15mm) Between Pad Btn1-1(2.815mm,10mm) on Top Layer And Track (2.974mm,8.459mm)(2.974mm,9.117mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.127mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2257.297mil|Location2.X=2264.452mil|Location1.Y=1419.395mil|Location2.Y=1426.55mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2257.297mil|Location2.X=2264.452mil|Location1.Y=1419.395mil|Location2.Y=1426.55mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.127mm &lt; 0.15mm) Between Pad Btn2-1(32.185mm,10mm) on Top Layer And Track (32.026mm,10.883mm)(32.026mm,11.541mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.127mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2257.297mil|Location2.X=2264.452mil|Location1.Y=1360.851mil|Location2.Y=1368.007mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2257.297mil|Location2.X=2264.452mil|Location1.Y=1360.851mil|Location2.Y=1368.007mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.127mm &lt; 0.15mm) Between Pad Btn2-1(32.185mm,10mm) on Top Layer And Track (32.026mm,8.459mm)(32.026mm,9.117mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.127mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1342.532mil|Location2.X=1347.468mil|Location1.Y=1246.532mil|Location2.Y=1251.468mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1342.532mil|Location2.X=1347.468mil|Location1.Y=1246.532mil|Location2.Y=1251.468mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad C1-1(9.117mm,6.942mm) on Top Layer And Text "R2" (8.763mm,6.325mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2079.925mil|Location2.X=2084.862mil|Location1.Y=1778.532mil|Location2.Y=1783.468mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2079.925mil|Location2.X=2084.862mil|Location1.Y=1778.532mil|Location2.Y=1783.468mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad C11-1(27.383mm,20.558mm) on Top Layer And Text "C12" (24.994mm,19.837mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2007.77mil|Location2.X=2012.707mil|Location1.Y=1811.329mil|Location2.Y=1816.266mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2007.77mil|Location2.X=2012.707mil|Location1.Y=1811.329mil|Location2.Y=1816.266mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad C11-2(25.583mm,20.558mm) on Top Layer And Text "C12" (24.994mm,19.837mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1412.232mil|Location2.X=1419.387mil|Location1.Y=1245.422mil|Location2.Y=1252.578mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1412.232mil|Location2.X=1419.387mil|Location1.Y=1245.422mil|Location2.Y=1252.578mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.011mm &lt; 0.15mm) Between Pad C1-2(10.917mm,6.942mm) on Top Layer And Text "R2" (8.763mm,6.325mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.011mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2079.532mil|Location2.X=2084.468mil|Location1.Y=1679.933mil|Location2.Y=1684.87mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2079.532mil|Location2.X=2084.468mil|Location1.Y=1679.933mil|Location2.Y=1684.87mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad C12-1(27.426mm,18.058mm) on Top Layer And Text "R7" (27.483mm,16.662mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1298.77mil|Location2.X=1303.707mil|Location1.Y=1905.329mil|Location2.Y=1910.266mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1298.77mil|Location2.X=1303.707mil|Location1.Y=1905.329mil|Location2.Y=1910.266mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad C13-1(7.617mm,22.942mm) on Top Layer And Text "C17" (6.985mm,22.225mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1354.5mil|Location2.X=1359.437mil|Location1.Y=1911.889mil|Location2.Y=1916.826mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1354.5mil|Location2.X=1359.437mil|Location1.Y=1911.889mil|Location2.Y=1916.826mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad C13-2(9.417mm,22.942mm) on Top Layer And Text "C17" (6.985mm,22.225mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1893.532mil|Location2.X=1898.468mil|Location1.Y=1283.634mil|Location2.Y=1288.571mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1893.532mil|Location2.X=1898.468mil|Location1.Y=1283.634mil|Location2.Y=1288.571mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad C15-1(22.058mm,7.617mm) on Top Layer And Text "R6" (22.758mm,6.325mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2061.823mil|Location2.X=2066.76mil|Location1.Y=1877.532mil|Location2.Y=1882.468mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2061.823mil|Location2.X=2066.76mil|Location1.Y=1877.532mil|Location2.Y=1882.468mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad C16-1(27.383mm,23.058mm) on Top Layer And Text "C11" (24.968mm,22.352mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2006.77mil|Location2.X=2011.707mil|Location1.Y=1910.329mil|Location2.Y=1915.266mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2006.77mil|Location2.X=2011.707mil|Location1.Y=1910.329mil|Location2.Y=1915.266mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad C16-2(25.583mm,23.058mm) on Top Layer And Text "C11" (24.968mm,22.352mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1959.127mil|Location2.X=1964.064mil|Location1.Y=1285.889mil|Location2.Y=1290.826mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1959.127mil|Location2.X=1964.064mil|Location1.Y=1285.889mil|Location2.Y=1290.826mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad C2-2(24.083mm,6.958mm) on Top Layer And Text "R6" (22.758mm,6.325mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1509.246mil|Location2.X=1514.183mil|Location1.Y=1967.65mil|Location2.Y=1972.587mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1509.246mil|Location2.X=1514.183mil|Location1.Y=1967.65mil|Location2.Y=1972.587mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad C9-2(13.442mm,24.991mm) on Top Layer And Text "STM1" (10.998mm,24.511mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1170.19mil|Location2.X=1177.345mil|Location1.Y=2574.303mil|Location2.Y=2581.459mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1170.19mil|Location2.X=1177.345mil|Location1.Y=2574.303mil|Location2.Y=2581.459mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.003mm &lt; 0.15mm) Between Pad D1-1(3.937mm,39.827mm) on Top Layer And Text "Reg 2" (2.21mm,40.411mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.003mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2101.862mil|Location2.X=2106.799mil|Location1.Y=2196.889mil|Location2.Y=2201.826mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2101.862mil|Location2.X=2106.799mil|Location1.Y=2196.889mil|Location2.Y=2201.826mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad D2-A(27mm,30.8mm) on Top Layer And Text "Q1" (27.864mm,29.464mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1629.192mil|Location2.X=1638.78mil|Location1.Y=1292.902mil|Location2.Y=1300.614mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1629.192mil|Location2.X=1638.78mil|Location1.Y=1292.902mil|Location2.Y=1300.614mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.124mm &lt; 0.15mm) Between Pad D4-2(16.55mm,8.3mm) on Top Layer And Track (16mm,7mm)(16mm,7.4mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.124mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1629.192mil|Location2.X=1638.736mil|Location1.Y=1266.315mil|Location2.Y=1274.117mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1629.192mil|Location2.X=1638.736mil|Location1.Y=1266.315mil|Location2.Y=1274.117mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.124mm &lt; 0.15mm) Between Pad D4-3(16.55mm,6.1mm) on Top Layer And Track (16mm,7mm)(16mm,7.4mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.124mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1741.605mil|Location2.X=1751.193mil|Location1.Y=1265.758mil|Location2.Y=1273.47mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1741.605mil|Location2.X=1751.193mil|Location1.Y=1265.758mil|Location2.Y=1273.47mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.124mm &lt; 0.15mm) Between Pad D4-4(18.45mm,6.1mm) on Top Layer And Track (19mm,7mm)(19mm,7.4mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.124mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1124.631mil|Location2.X=1131.786mil|Location1.Y=1704.052mil|Location2.Y=1711.207mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1124.631mil|Location2.X=1131.786mil|Location1.Y=1704.052mil|Location2.Y=1711.207mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.127mm &lt; 0.15mm) Between Pad NRST-1(4mm,17.815mm) on Top Layer And Track (2.459mm,17.974mm)(3.117mm,17.974mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.127mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1183.174mil|Location2.X=1190.33mil|Location1.Y=1704.052mil|Location2.Y=1711.207mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1183.174mil|Location2.X=1190.33mil|Location1.Y=1704.052mil|Location2.Y=1711.207mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.127mm &lt; 0.15mm) Between Pad NRST-1(4mm,17.815mm) on Top Layer And Track (4.883mm,17.974mm)(5.541mm,17.974mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.127mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1175.532mil|Location2.X=1180.468mil|Location1.Y=1272.889mil|Location2.Y=1277.826mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1175.532mil|Location2.X=1180.468mil|Location1.Y=1272.889mil|Location2.Y=1277.826mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad R1-2(4.9mm,7mm) on Top Layer And Text "LED1" (4.521mm,5.994mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2164.246mil|Location2.X=2169.183mil|Location1.Y=1272.889mil|Location2.Y=1277.826mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2164.246mil|Location2.X=2169.183mil|Location1.Y=1272.889mil|Location2.Y=1277.826mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad R5-1(30.1mm,7mm) on Top Layer And Text "LED2" (27.635mm,5.994mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2229.842mil|Location2.X=2234.779mil|Location1.Y=1259.77mil|Location2.Y=1264.707mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2229.842mil|Location2.X=2234.779mil|Location1.Y=1259.77mil|Location2.Y=1264.707mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad R5-2(31.9mm,7mm) on Top Layer And Text "LED2" (27.635mm,5.994mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1922.374mil|Location2.X=1927.311mil|Location1.Y=2132.889mil|Location2.Y=2137.826mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1922.374mil|Location2.X=1927.311mil|Location1.Y=2132.889mil|Location2.Y=2137.826mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad R8-1(23.981mm,28.321mm) on Top Layer And Text "R9" (23.139mm,27.838mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2006.77mil|Location2.X=2011.707mil|Location1.Y=2008.329mil|Location2.Y=2013.266mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2006.77mil|Location2.X=2011.707mil|Location1.Y=2008.329mil|Location2.Y=2013.266mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad R9-2(25.792mm,26.035mm) on Top Layer And Text "C16" (24.968mm,24.841mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1147.77mil|Location2.X=1152.707mil|Location1.Y=2771.043mil|Location2.Y=2775.98mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1147.77mil|Location2.X=1152.707mil|Location1.Y=2771.043mil|Location2.Y=2775.98mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad REG 1-3(4mm,45.76mm) on Multi-Layer And Text "D1" (3.15mm,44.399mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1161.532mil|Location2.X=1166.468mil|Location1.Y=2206.78mil|Location2.Y=2211.717mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1161.532mil|Location2.X=1166.468mil|Location1.Y=2206.78mil|Location2.Y=2211.717mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad Reg 2-4(5.588mm,31.368mm) on Top Layer And Text "R10" (4.166mm,29.82mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1623.414mil|Location2.X=1630.57mil|Location1.Y=1410.773mil|Location2.Y=1417.928mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1623.414mil|Location2.X=1630.57mil|Location1.Y=1410.773mil|Location2.Y=1417.928mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.051mm &lt; 0.15mm) Between Pad STM1-37(15.75mm,11.262mm) on Top Layer And Text "D4" (16.078mm,9.83mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.051mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1630.532mil|Location2.X=1635.468mil|Location1.Y=1411.882mil|Location2.Y=1416.819mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1630.532mil|Location2.X=1635.468mil|Location1.Y=1411.882mil|Location2.Y=1416.819mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad STM1-38(16.25mm,11.262mm) on Top Layer And Text "D4" (16.078mm,9.83mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1656.77mil|Location2.X=1661.707mil|Location1.Y=1411.882mil|Location2.Y=1416.819mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1656.77mil|Location2.X=1661.707mil|Location1.Y=1411.882mil|Location2.Y=1416.819mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad STM1-39(16.75mm,11.262mm) on Top Layer And Text "D4" (16.078mm,9.83mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1677.561mil|Location2.X=1682.498mil|Location1.Y=1411.882mil|Location2.Y=1416.819mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1677.561mil|Location2.X=1682.498mil|Location1.Y=1411.882mil|Location2.Y=1416.819mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad STM1-40(17.25mm,11.262mm) on Top Layer And Text "D4" (16.078mm,9.83mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1689.568mil|Location2.X=1694.505mil|Location1.Y=1411.882mil|Location2.Y=1416.819mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1689.568mil|Location2.X=1694.505mil|Location1.Y=1411.882mil|Location2.Y=1416.819mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad STM1-41(17.75mm,11.262mm) on Top Layer And Text "D4" (16.078mm,9.83mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1842.091mil|Location2.X=1847.028mil|Location1.Y=1471.889mil|Location2.Y=1476.826mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1842.091mil|Location2.X=1847.028mil|Location1.Y=1471.889mil|Location2.Y=1476.826mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.15mm) Between Pad STM1-48(21.25mm,11.262mm) on Top Layer And Text "C15" (21.285mm,11.049mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1438.185mil|Location2.X=1445.843mil|Location1.Y=2462.78mil|Location2.Y=2472.759mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1438.185mil|Location2.X=1445.843mil|Location1.Y=2462.78mil|Location2.Y=2472.759mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.081mm &lt; 0.15mm) Between Pad Switch-3(12.67mm,36.322mm) on Multi-Layer And Text "C4" (9.398mm,36.805mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.081mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDKZ2OHYYJK3AMF53LOFHNJNHHVNRJCA03MF3DBWKTZIPA4J0G5N5B"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Board Clearance Constraint (Gap=0mm) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1079.438mil|Location2.X=1088.562mil|Location1.Y=3552.144mil|Location2.Y=3561.269mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1079.438mil|Location2.X=1088.562mil|Location1.Y=3552.144mil|Location2.Y=3561.269mil|Absolute=True">Board Outline Clearance(Outline Edge): (0.119mm &lt; 0.2mm) Between Board Edge And Text "REG 1" (2.388mm,63.627mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1534.808mil|Location2.X=1543.932mil|Location1.Y=995.644mil|Location2.Y=1004.768mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1534.808mil|Location2.X=1543.932mil|Location1.Y=995.644mil|Location2.Y=1004.768mil|Absolute=True">Board Outline Clearance(Outline Edge): (0.011mm &lt; 0.2mm) Between Board Edge And Track (13.7mm,0.074mm)(21.3mm,0.074mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1534.808mil|Location2.X=1543.932mil|Location1.Y=996.629mil|Location2.Y=1005.753mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1534.808mil|Location2.X=1543.932mil|Location1.Y=996.629mil|Location2.Y=1005.753mil|Absolute=True">Board Outline Clearance(Outline Edge): (0.061mm &lt; 0.2mm) Between Board Edge And Track (13.7mm,0.124mm)(13.7mm,0.424mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1834.021mil|Location2.X=1843.145mil|Location1.Y=996.629mil|Location2.Y=1005.753mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\lhenr\Documents\GitHub\Placa STM32 testes\ProjetoSTM32\PCB1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1834.021mil|Location2.X=1843.145mil|Location1.Y=996.629mil|Location2.Y=1005.753mil|Absolute=True">Board Outline Clearance(Outline Edge): (0.061mm &lt; 0.2mm) Between Board Edge And Track (21.3mm,0.124mm)(21.3mm,0.424mm) on Top Overlay </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br></body>
+</html>

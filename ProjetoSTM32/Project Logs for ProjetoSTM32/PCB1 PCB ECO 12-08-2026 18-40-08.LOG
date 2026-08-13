@@ -1,0 +1,4 @@
+Change Component Designator: OldDesignator=Botão1 NewDesignator=Btn1
+Change Component Designator: OldDesignator=Botão2 NewDesignator=Btn2
+Change Component Designator: OldDesignator=NRST NewDesignator=Btn NRST
+Change Net Name : Old Net Name=NetBtn Enable1_2 New Net Name=NetBtn NRST_2

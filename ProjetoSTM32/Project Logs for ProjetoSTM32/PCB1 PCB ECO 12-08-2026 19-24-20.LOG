@@ -1,0 +1,6 @@
+Removed Pin From Net: NetName=GND Pin=C19-1
+Removed Pin From Net: NetName=VDD_STM Pin=C19-2
+Removed Pin From Net: NetName=GND Pin=C20-1
+Removed Pin From Net: NetName=VDD_STM Pin=C20-2
+Removed Member From Class: ClassName=Esquematico Member=C19
+Removed Member From Class: ClassName=Esquematico Member=C20

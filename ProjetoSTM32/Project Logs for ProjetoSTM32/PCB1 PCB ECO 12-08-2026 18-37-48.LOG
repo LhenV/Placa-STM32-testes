@@ -1,0 +1,10 @@
+Removed Pin From Net: NetName=BOOT Pin=Btn Boot1-2
+Removed Pin From Net: NetName=BOOT Pin=R7-2
+Removed Pin From Net: NetName=BOOT Pin=STM1-60
+Change Net Name : Old Net Name=BOOT New Net Name=3V3
+Change Net Name : Old Net Name=ENABLE New Net Name=NetBtn Enable1_2
+Added Pin To Net: NetName=NetBtn Boot1_2 Pin=Btn Boot1-2
+Added Pin To Net: NetName=NetBtn Boot1_2 Pin=R7-2
+Added Pin To Net: NetName=NetBtn Boot1_2 Pin=STM1-60
+Added Net: Name=NetBtn Boot1_2
+Added Rule: Name=Schematic Supply Nets_6
