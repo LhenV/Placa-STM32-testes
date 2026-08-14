@@ -6,7 +6,7 @@ constexpr int PIN_BTN_MODE = PA10;  // Botão para trocar o tipo de pulso
 constexpr int PIN_LED_ON = PA15;  // LED de Sistema (Verde)
 constexpr int PIN_LED_ESTIM = PA8;   // LED de Função/Estimulante (Vermelho)
 constexpr int PIN_ESTIM_OUT = PB1;   // Saída do Pulso para o MOSFET
-constexpr int PIN_BATTERIA = PB0;   // Leitura Analógica da Bateria
+constexpr int PIN_BATERIA = PB0;   // Leitura Analógica da Bateria
 
 // Configs
 constexpr int NUM_MODOS = 3; // Número de modos de pulso

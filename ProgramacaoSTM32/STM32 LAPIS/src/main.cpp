@@ -13,7 +13,7 @@ Botao botaoMode(PIN_BTN_MODE);
 Led ledOn(PIN_LED_ON);
 Led ledEstim(PIN_LED_ESTIM);
 
-Bateria bateria(PIN_BATTERIA);
+Bateria bateria(PIN_BATERIA);
 Estimulador estimulador(PIN_ESTIM_OUT);
 
 void setup() {  
