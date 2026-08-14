@@ -76,18 +76,10 @@ public:
         // Atualiza a saída do pulso com base no modo atual
         analogWrite(pino, valorPulso);
     }
-    bool estaLigado() const
-    {
-        return enabled;
-    }
-    int getModo() const
-    {
-        return modoAtual;
-    }
-    int getValorPulso() const
-    {
-        return valorPulso;
-    }
+    
+    bool estaLigado() const {return enabled;}
+    int getModo() const {return modoAtual;}
+    int getValorPulso() const{return valorPulso;}
 
 
 private:
