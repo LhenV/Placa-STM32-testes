@@ -9,10 +9,12 @@ constexpr int PIN_ESTIM_OUT = PB1;   // Saída do Pulso para o MOSFET
 constexpr int PIN_BATERIA = PB0;   // Leitura Analógica da Bateria
 
 // Configs
-constexpr int NUM_MODOS = 3; // Número de modos de pulso
+constexpr int NUM_MODOS = 2; // Dois modos de onda quadrada
+
+constexpr unsigned long FREQUENCIA_MODO_1 = 1;     // Onda quadrada de 1 Hz
+constexpr unsigned long FREQUENCIA_MODO_2 = 3000;  // Onda quadrada de 3 kHz
+constexpr int DUTY_CYCLE_50 = 2048; // 50% em PWM de 12 bits (0 a 4095)
 
 constexpr float BATERIA_MINIMA = 20.0f; // Percentual mínimo da bateria
 
-constexpr unsigned long INTERVALO_LED_PULSO_1 = 500; // Intervalo de piscada do LED para pulso 1 (em milissegundos)
-constexpr unsigned long INTERVALO_LED_PULSO_2 = 250; // Intervalo
-constexpr unsigned long INTERVALO_LED_PULSO_3 = 100; // Intervalo de piscada do LED para pulso 3 (em milissegundos)
+constexpr unsigned long INTERVALO_LED_MODO_1 = 500; // Meio período do sinal de 1 Hz

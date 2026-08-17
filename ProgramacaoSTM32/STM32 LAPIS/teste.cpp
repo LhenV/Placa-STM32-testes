@@ -17,11 +17,12 @@ constexpr int PIN_LED_ESTIM = PA8;
 constexpr int PIN_ESTIM_OUT = PB1;
 constexpr int PIN_BATTERIA = PB0;
 
-constexpr int NUM_MODOS = 3;
+constexpr int NUM_MODOS = 2;
 constexpr float BATERIA_MINIMA = 20.0f;
-constexpr unsigned long INTERVALO_LED_PULSO_1 = 500;
-constexpr unsigned long INTERVALO_LED_PULSO_2 = 250;
-constexpr unsigned long INTERVALO_LED_PULSO_3 = 100;
+constexpr unsigned long FREQUENCIA_MODO_1 = 1;
+constexpr unsigned long FREQUENCIA_MODO_2 = 3000;
+constexpr int DUTY_CYCLE_50 = 2048; // 50% em PWM de 12 bits
+constexpr unsigned long INTERVALO_LED_MODO_1 = 500;
 
 class Botao {
 public:
@@ -113,11 +114,12 @@ private:
 
 class Estimulador {
 public:
-  Estimulador(int pino) : pino(pino), ligado(false), modoAtual(0), valorPulso(80) {}
+  Estimulador(int pino) : pino(pino), ligado(false), modoAtual(0), frequenciaAtual(FREQUENCIA_MODO_1) {}
 
   void begin() {
     pinMode(pino, OUTPUT);
     analogWriteResolution(12);
+    analogWriteFrequency(frequenciaAtual);
     analogWrite(pino, 0);
   }
 
@@ -134,27 +136,34 @@ public:
     if (modo < 0 || modo >= NUM_MODOS) return;
 
     modoAtual = modo;
+    // Modo 0 gera 1 Hz; modo 1 gera 3 kHz. Depois de 3 kHz volta para 1 Hz.
     switch (modoAtual) {
-      case 0: valorPulso = 80; break;
-      case 1: valorPulso = 160; break;
-      case 2: valorPulso = 240; break;
+      case 0: frequenciaAtual = FREQUENCIA_MODO_1; break;
+      case 1: frequenciaAtual = FREQUENCIA_MODO_2; break;
     }
     update();
   }
 
   void update() {
-    analogWrite(pino, ligado ? valorPulso : 0);
+    if (!ligado) {
+      analogWrite(pino, 0);
+      return;
+    }
+
+    // Uma unica saida PWM: frequencia e duty de 50% formam a onda quadrada em PB1.
+    analogWriteFrequency(frequenciaAtual);
+    analogWrite(pino, DUTY_CYCLE_50);
   }
 
   bool estaLigado() const { return ligado; }
   int getModo() const { return modoAtual; }
-  int getValorPulso() const { return valorPulso; }
+  unsigned long getFrequencia() const { return frequenciaAtual; }
 
 private:
   int pino;
   bool ligado;
   int modoAtual;
-  int valorPulso;
+  unsigned long frequenciaAtual;
 };
 
 Botao botaoStart(PIN_BTN_START);
@@ -190,8 +199,9 @@ void loop() {
     estimulador.proximoModo();
     Serial.print("Modo: ");
     Serial.print(estimulador.getModo() + 1);
-    Serial.print(" | PWM: ");
-    Serial.println(estimulador.getValorPulso());
+    Serial.print(" | Frequencia: ");
+    Serial.print(estimulador.getFrequencia());
+    Serial.println(" Hz");
   }
 
   estimulador.update();
@@ -205,11 +215,10 @@ void loop() {
   if (!estimulador.estaLigado()) {
     ledEstim.off();
   } else if (estimulador.getModo() == 0) {
-    ledEstim.piscar(INTERVALO_LED_PULSO_1);
-  } else if (estimulador.getModo() == 1) {
-    ledEstim.piscar(INTERVALO_LED_PULSO_2);
+    ledEstim.piscar(INTERVALO_LED_MODO_1);
   } else {
-    ledEstim.piscar(INTERVALO_LED_PULSO_3);
+    // Um LED nao consegue mostrar 3 kHz; aceso indica que esse modo esta ativo.
+    ledEstim.on();
   }
 
   delay(10);

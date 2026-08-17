@@ -49,7 +49,8 @@ void loop() {
   if (botaoMode.foiPressionado()) {
     estimulador.proximoModo();
 
-    Serial.println("Modo atual: " + String(estimulador.getModo()));
+    Serial.println("Modo atual: " + String(estimulador.getModo() + 1) +
+                   " | Frequencia: " + String(estimulador.getFrequencia()) + " Hz");
   }
 
   // Estimuilador atualizado
@@ -66,13 +67,12 @@ void loop() {
   if (estimulador.estaLigado()) {
     switch (estimulador.getModo()) {
       case 0:
-        ledEstim.piscar(INTERVALO_LED_PULSO_1);
+        // O LED acompanha o sinal de 1 Hz, alternando a cada meio segundo.
+        ledEstim.piscar(INTERVALO_LED_MODO_1);
         break;
       case 1:
-        ledEstim.piscar(INTERVALO_LED_PULSO_2);
-        break;
-      case 2:
-        ledEstim.piscar(INTERVALO_LED_PULSO_3);
+        // 3 kHz não é visível no LED; aceso indica que esse modo está ativo.
+        ledEstim.on();
         break;
     }
   } else {

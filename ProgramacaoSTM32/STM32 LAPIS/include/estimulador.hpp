@@ -5,13 +5,14 @@
 class Estimulador {
 public:
 
-    Estimulador(int pino) : pino(pino), enabled(false), modoAtual(0), valorPulso(80) {
+    Estimulador(int pino) : pino(pino), enabled(false), modoAtual(0), frequenciaAtual(FREQUENCIA_MODO_1) {
     }
 
     void begin()
     {
         pinMode(pino, OUTPUT);
         analogWriteResolution(12);
+        analogWriteFrequency(frequenciaAtual);
         analogWrite(pino, 0);
     }
 
@@ -42,14 +43,11 @@ public:
             modoAtual = modo;
             switch (modoAtual)
             {
-                case 0:
-                    valorPulso = 80;
+                case 0: // Modo 1: onda quadrada de 1 Hz
+                    frequenciaAtual = FREQUENCIA_MODO_1;
                     break;
-                case 1:
-                    valorPulso = 160;
-                    break;
-                case 2:
-                    valorPulso = 240;
+                case 1: // Modo 2: onda quadrada de 3 kHz
+                    frequenciaAtual = FREQUENCIA_MODO_2;
                     break;
             }
             update();
@@ -73,13 +71,14 @@ public:
             analogWrite(pino, 0); // Desliga a saída do pulso
             return;
         }
-        // Atualiza a saída do pulso com base no modo atual
-        analogWrite(pino, valorPulso);
+        // Há somente uma saída PWM no projeto; esta frequência vale para PB1.
+        analogWriteFrequency(frequenciaAtual);
+        analogWrite(pino, DUTY_CYCLE_50); // 50% de duty cycle: onda quadrada
     }
     
     bool estaLigado() const {return enabled;}
     int getModo() const {return modoAtual;}
-    int getValorPulso() const{return valorPulso;}
+    unsigned long getFrequencia() const{return frequenciaAtual;}
 
 
 private:
@@ -88,5 +87,5 @@ private:
     bool enabled;
 
     int modoAtual;
-    int valorPulso;
+    unsigned long frequenciaAtual;
 };
