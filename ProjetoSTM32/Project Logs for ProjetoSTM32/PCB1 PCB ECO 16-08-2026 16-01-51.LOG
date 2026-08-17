@@ -1,0 +1,51 @@
+Added Component: Designator=J2(Header1x6)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Component: Designator=LED3(LED-0603-GREEN)
+Add component (AddParameter): Name = "Color"; Value = "Green"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "http://www.us.kingbright.com/images/catalog/SPEC/APT1608CGCK.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "http://www.us.kingbright.com/images/catalog/SPEC/APT1608CGCK.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Current - Test"; Value = "20mA"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Lens Style/Size"; Value = "Rectangle with Flat Top, 1.1mm x 0.8mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Lens Type"; Value = "Clear"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer 1"; Value = "Kingbright Company LLC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number 1"; Value = "APT1608CGCK"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Material"; Value = "AlGaInP"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package / Case"; Value = "0603 (1608 metric)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ratings"; Value = "20mcd min; 50 mcd typ; 570 nm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS 1"; Value = "RoHS Compliant"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SCDType"; Value = "source"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "754-1116-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Viewing Angle"; Value = "120°"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage - Forward (Vf) @ 10mA"; Value = "2.0V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage - Forward (Vf) Typ"; Value = "2.1V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Wavelength - Dominant"; Value = "570nm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Wavelength - Peak"; Value = "574nm"; VariantName = "[No Variations]"
+Added Component: Designator=R7(Resistor SMD 0603)
+Add component (AddParameter): Name = "Value"; Value = "220"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetBtn Boot1_2 Pin=J2-1
+Added Pin To Net: NetName=GND Pin=J2-3
+Added Pin To Net: NetName=3V3 Pin=J2-4
+Added Pin To Net: NetName=NetBtn NRST1_2 Pin=J2-5
+Added Pin To Net: NetName=GND Pin=LED3-K
+Added Pin To Net: NetName=3V3 Pin=R7-1
+Change Net Name : Old Net Name=NetBtn Boot1_2 New Net Name=BOOT
+Change Net Name : Old Net Name=NetBtn NRST1_2 New Net Name=NRST
+Change Net Color : Old Net Color=RGB(158, 161, 117) New Net Color=Fuchsia
+Added Pin To Net: NetName=NetLED3_A Pin=LED3-A
+Added Pin To Net: NetName=NetLED3_A Pin=R7-2
+Added Net: Name=NetLED3_A
+Added Pin To Net: NetName=SWCLK Pin=J2-2
+Added Pin To Net: NetName=SWCLK Pin=STM1-25
+Added Net: Name=SWCLK
+Add Class Member: Failed to add class member : Component C9 805
+Add Class Member: Failed to add class member : Component C10 805
+Add Class Member: Failed to add class member : Component C11 805
+Add Class Member: Failed to add class member : Component CONECTOR Estimulante1 BM02B-SRSS-TB(LF)(SN)
+Added Member To Class: ClassName=Esquematico Member=Component J2 Con_Header 6
+Add Class Member: Failed to add class member : Component LED2 Red
+Added Member To Class: ClassName=Esquematico Member=Component LED3 Red
+Add Class Member: Failed to add class member : Component R11 Resistor SMD
+Added Member To Class: ClassName=Esquematico Member=Component STM1 STM32C031C6T3

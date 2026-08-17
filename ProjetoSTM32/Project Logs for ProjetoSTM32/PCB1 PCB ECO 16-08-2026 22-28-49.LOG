@@ -1,0 +1,12 @@
+Change Component Designator: OldDesignator=C11 NewDesignator=C9
+Change Component Designator: OldDesignator=C14 NewDesignator=C10
+Change Component Designator: OldDesignator=C15 NewDesignator=C11
+Change Component Designator: OldDesignator=R7 NewDesignator=R8
+Change Component Designator: OldDesignator=R8 NewDesignator=R9
+Change Component Designator: OldDesignator=R9 NewDesignator=R11
+Added Member To Class: ClassName=Esquematico Member=Component C9 805
+Added Member To Class: ClassName=Esquematico Member=Component C10 805
+Added Member To Class: ClassName=Esquematico Member=Component C11 805
+Add Class Member: Failed to add class member : Component CONECTOR Estimulante1 BM02B-SRSS-TB(LF)(SN)
+Add Class Member: Failed to add class member : Component LED2 Red
+Added Member To Class: ClassName=Esquematico Member=Component R11 Resistor SMD
