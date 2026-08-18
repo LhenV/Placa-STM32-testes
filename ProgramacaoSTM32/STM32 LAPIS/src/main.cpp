@@ -6,78 +6,71 @@
 #include "estimulador.hpp"
 #include "Led.hpp"
 
-// Objetos instanciados
+
+// Instâncias
 Botao botaoStart(PIN_BTN_START);
 Botao botaoMode(PIN_BTN_MODE);
-
 Led ledOn(PIN_LED_ON);
 Led ledEstim(PIN_LED_ESTIM);
-
-Bateria bateria(PIN_BATERIA);
+Bateria bateria(PIN_BATTERIA);
 Estimulador estimulador(PIN_ESTIM_OUT);
 
-void setup() {  
-  // Inicialização do Serial para debug
+void setup() {
   Serial.begin(115200);
   
-  // Inicialização dos pinos
   botaoStart.begin();
   botaoMode.begin();
-
   ledOn.begin();
   ledEstim.begin();
-
-  // Inicialização da bateria
   bateria.begin();
-
-  // Inicialização do estimulador
   estimulador.begin();
+  
+  // Prints seriais de menu
+  Serial.println("=== Sistema Estimulador ===");
+  Serial.println("Comandos:");
+  Serial.println("  START: Liga/Desliga");
+  Serial.println("  MODE: Alterna entre modos");
+  Serial.println("==========================");
 }
 
-void loop() { 
-  // Atualização da bateria
+void loop() {
   bateria.update();
-
-  // Verifica se o botão de start foi pressionado
-  if (botaoStart.foiPressionado()) {
-    estimulador.alternar();
-
-    Serial.println("Estimulador: " + String(estimulador.estaLigado() ? "Ligado" : "Desligado"));
-  }
-
-  // Verifica se o botão de modo foi pressionado
-  if (botaoMode.foiPressionado()) {
-    estimulador.proximoModo();
-
-    Serial.println("Modo atual: " + String(estimulador.getModo() + 1) +
-                   " | Frequencia: " + String(estimulador.getFrequencia()) + " Hz");
-  }
-
-  // Estimuilador atualizado
   estimulador.update();
 
-  // Led ON
-  if (bateria.estaBaixa()) {
-    ledOn.piscar(100); // Pisca rápido se a bateria estiver baixa
-  } else {
-    ledOn.on(); // Liga o led normalmente
-  }
-
-  // Led Estimulador
-  if (estimulador.estaLigado()) {
-    switch (estimulador.getModo()) {
-      case 0:
-        // O LED acompanha o sinal de 1 Hz, alternando a cada meio segundo.
-        ledEstim.piscar(INTERVALO_LED_MODO_1);
-        break;
-      case 1:
-        // 3 kHz não é visível no LED; aceso indica que esse modo está ativo.
-        ledEstim.on();
-        break;
+  // Verifica botão START
+  if (botaoStart.foiPressionado()) {
+    estimulador.alternar();
+    if (estimulador.estaLigado()) {
+      ledOn.on();
     }
-  } else {
-    ledEstim.off();
   }
 
-  delay(10); // Pequeno atraso para evitar sobrecarga do loop
+  // Verifica botão MODE
+  if (botaoMode.foiPressionado()) {
+    estimulador.proximoModo();
+    Serial.print("Frequência atual: ");
+    Serial.print(estimulador.getFrequencia());
+    Serial.println(" Hz");
+  }
+
+  // Controle dos LEDs
+  if (!estimulador.estaLigado()) {
+    ledOn.off();
+    ledEstim.off();
+  } else {
+    // LED ON pisca se bateria estiver baixa
+    if (bateria.estaBaixa()) {
+      ledOn.piscar(INTERVALO_LED_BATERIA);
+    } else {
+      ledOn.on();
+    }
+
+    // LED ESTIM pisca conforme o modo
+    if (estimulador.getModo() == 0) {
+      ledEstim.piscar(INTERVALO_LED_MODO_1);
+    } else {
+      ledEstim.piscar(INTERVALO_LED_MODO_2);
+    }
+  }
+
 }

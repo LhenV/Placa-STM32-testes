@@ -1,0 +1,7 @@
+Added Pin To Net: NetName=NetD3_2 Pin=D?-2
+Added Pin To Net: NetName=NetD3_2 Pin=USB-1
+Added Net: Name=NetD3_2
+Add Class Member: Failed to add class member : Component CONECTOR Estimulante1 BM02B-SRSS-TB(LF)(SN)
+Add Class Member: Failed to add class member : Component D3 1N5819HW-7-F
+Add Class Member: Failed to add class member : Component LED2 Red
+Add Class Member: Failed to add class member : Component MODULO_USB? Header 6

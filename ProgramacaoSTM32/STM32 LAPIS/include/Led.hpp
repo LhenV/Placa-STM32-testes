@@ -3,39 +3,37 @@
 #include <Arduino.h>
 
 class Led {
-    public:
-        Led(int pino) : pino(pino), estadoAtual(false), ultimoTempo(0) {
-        }
+  public:
+    Led(uint8_t pino)
+      : pino(pino), estadoAtual(false), ultimoTempo(0) {}
 
-        void begin() {
-            pinMode(pino, OUTPUT);
-            off();
-        }
+    void begin() {
+      pinMode(pino, OUTPUT);
+      off();
+    }
 
-        void on() {
-            estadoAtual = true;
-            digitalWrite(pino, HIGH);
-        }
+    void on() {
+      estadoAtual = true;
+      digitalWrite(pino, HIGH);
+    }
 
-        void off() {
-            estadoAtual = false;
-            digitalWrite(pino, LOW);
-        }
+    void off() {
+      estadoAtual = false;
+      digitalWrite(pino, LOW);
+    }
+    // Pisca o LED com intervalo definido
+    void piscar(unsigned long intervalo) {
+      const unsigned long agora = millis();
+      if (agora - ultimoTempo >= intervalo) {
+        estadoAtual = !estadoAtual;
+        digitalWrite(pino, estadoAtual ? HIGH : LOW);
+        ultimoTempo = agora;
+      }
+    }
 
-        void update() {
-        }
-
-        void piscar(unsigned long intervalo) {
-            unsigned long tempoAtual = millis();
-            if (tempoAtual - ultimoTempo >= intervalo) {
-                estadoAtual = !estadoAtual;
-                digitalWrite(pino, estadoAtual ? HIGH : LOW);
-                ultimoTempo = tempoAtual;
-            }
-        }
-
-    private:
-        int pino;
-        bool estadoAtual;
-        unsigned long ultimoTempo;
+  private:
+    uint8_t pino;
+    bool estadoAtual;
+    unsigned long ultimoTempo;
 };
+

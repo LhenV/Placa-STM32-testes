@@ -3,51 +3,33 @@
 #include <Arduino.h>
 
 class Bateria {
-public:
-
-    Bateria(int pino) : pino(pino), percentualAtual(100.0f) {
-    }
+  public:
+    Bateria(uint8_t pino)
+      : pino(pino), tensaoAtual(0.0f), percentualAtual(100.0f) {}
 
     void begin() {
-        pinMode(pino, INPUT);
-        analogReadResolution(12);
+      pinMode(pino, INPUT);
+      analogReadResolution(12);
     }
 
     void update() {
-        getPercentual();
+      float leituraADC = analogRead(pino);
+      float tensaoPino = (leituraADC / 4095.0) * 3.3;
+      tensaoAtual = tensaoPino * 5.0;
+      
+      // Calcula percentual: 10V = 0%, 12.6V = 100%
+      percentualAtual = ((tensaoAtual - 10.0) / 2.6) * 100.0;
+      
+      // Limita entre 0% e 100%
+      percentualAtual = constrain(percentualAtual, 0.0, 100.0);
     }
 
-    float getPercentual() {
-        int leituraAnalogica = analogRead(pino);
-        // Converte ADC para tensão no pino do STM32
-        float tensaoADC = (leituraAnalogica / 4095.0f) * 3.3f;
-
-        // Corrige o divisor de tensão:
-        // R3 = 30k
-        // R4 = 7.5k
-        // Vbat = Vadc * 5
-        
-        float tensaoBateria = tensaoADC * 5.0f;
-
-        percentualAtual = ((tensaoBateria - 10.0f) / (12.6f - 10.0f)) * 100.0f;
-
-        // Limita entre 0 e 100
-        if (percentualAtual > 100.0f)
-            percentualAtual = 100.0f;
-
-        if (percentualAtual < 0.0f)
-            percentualAtual = 0.0f;
-
-        return percentualAtual;
+    bool estaBaixa() const {
+      return percentualAtual < BATERIA_MINIMA;
     }
 
-    bool estaBaixa() {
-        return percentualAtual < BATERIA_MINIMA;
-    }
-
-private:
-
-    int pino;
+  private:
+    uint8_t pino;
+    float tensaoAtual;
     float percentualAtual;
-
 };

@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=RX Pin=STM32-33
+Removed Pin From Net: NetName=TX Pin=STM32-34
+Add Class Member: Failed to add class member : Component CONECTOR Estimulante1 BM02B-SRSS-TB(LF)(SN)
+Add Class Member: Failed to add class member : Component LED2 Red

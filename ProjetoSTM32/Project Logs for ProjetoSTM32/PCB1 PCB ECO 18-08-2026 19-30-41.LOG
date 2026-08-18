@@ -1,0 +1,69 @@
+Removed Pin From Net: NetName=5V Pin=D3-1
+Removed Pin From Net: NetName=GND Pin=D4-1
+Removed Pin From Net: NetName=GND Pin=USB-5
+Removed Pin From Net: NetName=GND Pin=USB-S1
+Removed Pin From Net: NetName=GND Pin=USB-S2
+Removed Pin From Net: NetName=GND Pin=USB-S3
+Removed Pin From Net: NetName=GND Pin=USB-S4
+Removed Pin From Net: NetName=GND Pin=USB-S5
+Removed Pin From Net: NetName=GND Pin=USB-S6
+Removed Member From Class: ClassName=Esquematico Member=D3
+Removed Member From Class: ClassName=Esquematico Member=D4
+Removed Member From Class: ClassName=Esquematico Member=USB
+Change Component Footprint: Designator=D1 Old Footprint=FP-SOD123-MFG New Footprint=FP-SOD123-MFG
+Added Component: Designator=D?(FP-SOD123-MFG)
+Add component (AddParameter): Name = "Average Rectified Current"; Value = "1A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Capacitance"; Value = "110pF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Case/Package"; Value = "SOD-123-2"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Contact Plating"; Value = "Tin"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Current Rating"; Value = "1A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Element Configuration"; Value = "Single"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Forward Current"; Value = "1A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Forward Voltage"; Value = "450mV"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "1.25mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Lead Free"; Value = "Lead Free"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Length"; Value = "2.85mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Forward Surge Current (Ifsm)"; Value = "25A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Operating Temperature"; Value = "125°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Power Dissipation"; Value = "450mW"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Repetitive Reverse Voltage (Vrrm)"; Value = "40V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Reverse Voltage (DC)"; Value = "40V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Min Operating Temperature"; Value = "-65°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Number of Pins"; Value = "2"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Output Current"; Value = "1A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package Quantity"; Value = "3000"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Packaging"; Value = "Tape and Reel"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Peak Non-Repetitive Surge Current"; Value = "25A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Peak Reverse Current"; Value = "50uA"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Polarity"; Value = "Standard"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Radiation Hardening"; Value = "No"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "REACH SVHC"; Value = "No SVHC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Termination"; Value = "SMD/SMT"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage Rating (DC)"; Value = "40V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Weight"; Value = "0.000353oz"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Width"; Value = "1.7mm"; VariantName = "[No Variations]"
+Added Component: Designator=MODULO_USB?(Header1x6)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=5V Pin=D?-1
+Added Pin To Net: NetName=GND Pin=MODULO_USB?-2
+Added Pin To Net: NetName=NetD?_2 Pin=D?-2
+Added Pin To Net: NetName=NetD?_2 Pin=MODULO_USB?-1
+Added Net: Name=NetD?_2
+Added Pin To Net: NetName=RX Pin=MODULO_USB?-4
+Added Pin To Net: NetName=RX Pin=STM32-13
+Added Pin To Net: NetName=RX Pin=STM32-33
+Added Net: Name=RX
+Added Pin To Net: NetName=TX Pin=MODULO_USB?-3
+Added Pin To Net: NetName=TX Pin=STM32-14
+Added Pin To Net: NetName=TX Pin=STM32-34
+Added Net: Name=TX
+Added Member To Class: ClassName=Esquematico Member=Component C11 805
+Add Class Member: Failed to add class member : Component CONECTOR Estimulante1 BM02B-SRSS-TB(LF)(SN)
+Added Member To Class: ClassName=Esquematico Member=Component D? 1N5819HW-7-F
+Add Class Member: Failed to add class member : Component LED2 Red
+Added Member To Class: ClassName=Esquematico Member=Component MODULO_USB? Header 6
+Added Member To Class: ClassName=Esquematico Member=Component R7 Resistor SMD
+Added Member To Class: ClassName=Esquematico Member=Component R8 Resistor SMD
+Added Member To Class: ClassName=Esquematico Member=Component R9 Resistor SMD

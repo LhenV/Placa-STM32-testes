@@ -1,25 +1,21 @@
 #include <Arduino.h>
 
 // Pinagem da placa STM32.
-
 constexpr uint8_t PIN_BTN_START = PA9;
 constexpr uint8_t PIN_BTN_MODE = PA10;
-constexpr uint8_t PIN_LED_ON = PA15;
-constexpr uint8_t PIN_LED_ESTIM = PA8;
+constexpr uint8_t PIN_LED_ON = PA8;
+constexpr uint8_t PIN_LED_ESTIM = PA15;
 constexpr uint8_t PIN_ESTIM_OUT = PB1;
 constexpr uint8_t PIN_BATTERIA = PB0;
 
 // Modos disponíveis para a onda quadrada gerada em PB1.
 constexpr uint8_t NUM_MODOS = 2;
-constexpr unsigned long FREQUENCIA_MODO_1 = 1;
-constexpr unsigned long FREQUENCIA_MODO_2 = 3000;
-
-constexpr uint16_t DUTY_CYCLE_50 = 2048; // 50% de duty cycle em PWM de 12 bits.
+constexpr unsigned long FREQUENCIA_MODO_1 = 1;    
+constexpr unsigned long FREQUENCIA_MODO_2 = 3000; 
 
 constexpr unsigned long INTERVALO_LED_MODO_1 = 500;
+constexpr unsigned long INTERVALO_LED_MODO_2 = 100;
 constexpr unsigned long INTERVALO_LED_BATERIA = 100;
-
-constexpr unsigned long DEBOUNCE_MS = 30; // Tempo para estabilizar o botão.
 
 constexpr float ADC_MAX = 4095.0f;
 constexpr float ADC_VREF = 3.3f;
@@ -29,62 +25,51 @@ constexpr float TENSAO_BATERIA_MIN = 10.0f;
 constexpr float TENSAO_BATERIA_MAX = 12.6f;
 constexpr float BATERIA_MINIMA = 20.0f;
 
-
-// Definições de classes para encapsular a lógica de cada componente da placa.
+// --- CLASSE BOTAO ---
 class Botao {
   public:
     Botao(uint8_t pino)
-      : pino(pino),
-        estadoAtual(false),
-        ultimaLeitura(false),
-        ultimoTempo(0) {}
+      : pino(pino), estadoAnterior(HIGH), estadoValidado(HIGH), ultimoDebounce(0) {}
 
     void begin() {
-      // A placa possui pull-up externo de 10 kOhm; botão pressionado lê LOW.
-      pinMode(pino, INPUT);
-
-      estadoAtual = digitalRead(pino) == LOW;
-      ultimaLeitura = estadoAtual;
+      pinMode(pino, INPUT_PULLUP);
+      estadoAnterior = digitalRead(pino);
+      estadoValidado = estadoAnterior;
     }
-
+    // Verifica se o botão foi pressionado com debounce
     bool foiPressionado() {
-      // Detecta uma única borda de pressão após o tempo de debounce.
-      const unsigned long agora = millis();
-      const bool leitura = digitalRead(pino) == LOW;
+      int leitura = digitalRead(pino);
+      bool pressionado = false;
 
-      if (leitura != ultimaLeitura) {
-        // Atualiza o instante da última variação e a leitura anterior.
-        ultimoTempo = agora;
-        ultimaLeitura = leitura;
+      if (leitura != estadoAnterior) {
+        ultimoDebounce = millis();
       }
-
-      if (agora - ultimoTempo >= DEBOUNCE_MS) {
-        if (leitura != estadoAtual) {
-          estadoAtual = leitura;
-
-          if (estadoAtual) {
-            return true;
+    // O clique só é real se durar mais que 50ms
+      if ((millis() - ultimoDebounce) > 0) {
+        if (leitura != estadoValidado) {
+          estadoValidado = leitura;
+          if (estadoValidado == LOW) {
+            pressionado = true;
           }
         }
       }
 
-      return false;
+      estadoAnterior = leitura;
+      return pressionado;
     }
 
   private:
-    uint8_t pino;                   // Pino conectado ao botão.
-    bool estadoAtual;           // Estado estável do botão.
-    bool ultimaLeitura;         // Leitura usada para detectar variação.
-    unsigned long ultimoTempo;  // Instante da última variação.
+    uint8_t pino;
+    int estadoAnterior;
+    int estadoValidado;
+    unsigned long ultimoDebounce;
 };
 
-
+// --- CLASSE LED ---
 class Led {
   public:
     Led(uint8_t pino)
-      : pino(pino),
-        estadoAtual(false),
-        ultimoTempo(0) {}
+      : pino(pino), estadoAtual(false), ultimoTempo(0) {}
 
     void begin() {
       pinMode(pino, OUTPUT);
@@ -100,11 +85,9 @@ class Led {
       estadoAtual = false;
       digitalWrite(pino, LOW);
     }
-
+    // Pisca o LED com intervalo definido
     void piscar(unsigned long intervalo) {
-      // Não utiliza delay para não interromper a leitura dos botões.
       const unsigned long agora = millis();
-
       if (agora - ultimoTempo >= intervalo) {
         estadoAtual = !estadoAtual;
         digitalWrite(pino, estadoAtual ? HIGH : LOW);
@@ -113,18 +96,16 @@ class Led {
     }
 
   private:
-    uint8_t pino;                   // Pino conectado ao LED.
-    bool estadoAtual;           // Estado lógico atual do LED.
-    unsigned long ultimoTempo;  // Controle do intervalo de piscada.
+    uint8_t pino;
+    bool estadoAtual;
+    unsigned long ultimoTempo;
 };
 
-
+// --- CLASSE BATERIA ---
 class Bateria {
   public:
     Bateria(uint8_t pino)
-      : pino(pino),
-        tensaoAtual(0.0f),
-        percentualAtual(100.0f) {}
+      : pino(pino), tensaoAtual(0.0f), percentualAtual(100.0f) {}
 
     void begin() {
       pinMode(pino, INPUT);
@@ -132,184 +113,176 @@ class Bateria {
     }
 
     void update() {
-      // Converte a leitura de 12 bits em tensão e corrige o divisor resistivo.
-      const int leitura = analogRead(pino);
-
-      const float tensaoADC =
-        (static_cast<float>(leitura) / ADC_MAX) * ADC_VREF;
-
-      tensaoAtual = tensaoADC * FATOR_DIVISOR;
-
-      percentualAtual =
-        ((tensaoAtual - TENSAO_BATERIA_MIN) /
-        (TENSAO_BATERIA_MAX - TENSAO_BATERIA_MIN)) * 100.0f;
-
-      if (percentualAtual > 100.0f) {
-        percentualAtual = 100.0f;
-      }
-
-      if (percentualAtual < 0.0f) {
-        percentualAtual = 0.0f;
-      }
+      float leituraADC = analogRead(pino);
+      float tensaoPino = (leituraADC / 4095.0) * 3.3;
+      tensaoAtual = tensaoPino * 5.0;
+      
+      // Calcula percentual: 10V = 0%, 12.6V = 100%
+      percentualAtual = ((tensaoAtual - 10.0) / 2.6) * 100.0;
+      
+      // Limita entre 0% e 100%
+      percentualAtual = constrain(percentualAtual, 0.0, 100.0);
     }
 
     bool estaBaixa() const {
-      // Retorna verdadeiro quando a estimativa está abaixo de 20%.
       return percentualAtual < BATERIA_MINIMA;
     }
 
-    float getPercentual() const {
-      return percentualAtual;
-    }
-
-    float getTensao() const {
-      return tensaoAtual;
-    }
-
   private:
-    uint8_t pino;                 // Entrada analógica PB0.
-    float tensaoAtual;        // Tensão estimada da bateria.
-    float percentualAtual;    // Carga estimada entre 0 e 100%.
+    uint8_t pino;
+    float tensaoAtual;
+    float percentualAtual;
 };
 
-
+// --- CLASSE ESTIMULADOR ---
 class Estimulador {
   public:
     Estimulador(uint8_t pino)
-      : pino(pino),
-        ligado(false),
-        modoAtual(0),
-        frequenciaAtual(FREQUENCIA_MODO_1) {}
+      : pino(pino), ligado(false), modoAtual(0), 
+        ultimoTempoToggle(0), estadoSoftwarePwm(false) {}
 
     void begin() {
-      // PWM de 12 bits para gerar a onda quadrada em PB1.
       pinMode(pino, OUTPUT);
-
-      analogWriteResolution(12);
-      analogWriteFrequency(frequenciaAtual);
-      analogWrite(pino, 0);
+      digitalWrite(pino, LOW);
     }
 
     void alternar() {
-      // START liga/desliga sem alterar o modo selecionado.
-      ligado = !ligado;
-
+      ligado = !ligado; // Inverte estado
       if (ligado) {
-        aplicarPWM();
+        iniciarSinal();
+        Serial.println("Estimulador LIGADO");
       } else {
-        analogWrite(pino, 0);
+        pararSinal();
+        Serial.println("Estimulador DESLIGADO");
       }
     }
 
     void proximoModo() {
-      // Alterna em ciclo: 1 Hz -> 3 kHz -> 1 Hz.
-      modoAtual = (modoAtual + 1) % NUM_MODOS;
-
-      frequenciaAtual =
-        (modoAtual == 0)
-          ? FREQUENCIA_MODO_1
-          : FREQUENCIA_MODO_2;
-
-      analogWriteFrequency(frequenciaAtual);
-
+      modoAtual = (modoAtual + 1) % NUM_MODOS; // Ciclo
+      Serial.print("Modo alterado para: ");
+      Serial.println(modoAtual + 1);
+      
       if (ligado) {
-        aplicarPWM();
+        iniciarSinal();
+      }
+    }
+    
+    // Atualiza geração da onda
+    void update() {
+      if (!ligado) return;
+
+      // Calcula o meio período conforme o modo
+      unsigned long meioPeriodo;
+      if (modoAtual == 0) {
+        meioPeriodo = 500000;  // 500ms em microssegundos (1 Hz)
+      } else {
+        meioPeriodo = 166;     // ~166us em microssegundos (3 kHz)
+      }
+
+      // Verifica se está na hora de inverter o sinal
+      unsigned long agora = micros();
+      if (agora - ultimoTempoToggle >= meioPeriodo) {
+        ultimoTempoToggle = agora;
+        estadoSoftwarePwm = !estadoSoftwarePwm;
+        digitalWrite(pino, estadoSoftwarePwm ? HIGH : LOW);
       }
     }
 
-    bool estaLigado() const {
-      return ligado;
-    }
-
-    int getModo() const {
-      return modoAtual;
-    }
-
+    bool estaLigado() const { return ligado; }
+    int getModo() const { return modoAtual; }
+    
     unsigned long getFrequencia() const {
-      return frequenciaAtual;
+      if (modoAtual == 0) {
+        return FREQUENCIA_MODO_1;
+      } else {
+        return FREQUENCIA_MODO_2;
+      }
     }
 
   private:
-    void aplicarPWM() {
-      // Frequência selecionada com 50% de duty cycle resulta em onda quadrada.
-      analogWriteFrequency(frequenciaAtual);
-      analogWrite(pino, DUTY_CYCLE_50);
+    // Inicia a geração de sinal conforme modo
+    void iniciarSinal() {
+      estadoSoftwarePwm = true;
+      digitalWrite(pino, HIGH);
+      ultimoTempoToggle = micros();
     }
 
-    uint8_t pino;                     // Saída PWM PB1.
-    bool ligado;                  // Indica se a saída deve ficar ativa.
-    uint8_t modoAtual;                // 0 = 1 Hz, 1 = 3 kHz.
-    unsigned long frequenciaAtual;// Frequência usada pelo PWM.
+    void pararSinal() {
+      digitalWrite(pino, LOW);
+      estadoSoftwarePwm = false;
+    }
+
+    uint8_t pino;
+    bool ligado;
+    uint8_t modoAtual;
+    unsigned long ultimoTempoToggle;
+    bool estadoSoftwarePwm;
 };
 
-// Declarações de instâncias globais para os componentes da placa.
+// Instâncias
 Botao botaoStart(PIN_BTN_START);
 Botao botaoMode(PIN_BTN_MODE);
-
 Led ledOn(PIN_LED_ON);
 Led ledEstim(PIN_LED_ESTIM);
-
 Bateria bateria(PIN_BATTERIA);
-
 Estimulador estimulador(PIN_ESTIM_OUT);
 
-// Setup e loop principais do Arduino.
 void setup() {
-  // Inicialização executada uma única vez após o reset.
   Serial.begin(115200);
-
+  
   botaoStart.begin();
   botaoMode.begin();
-
   ledOn.begin();
   ledEstim.begin();
-
   bateria.begin();
   estimulador.begin();
+  
+  // Prints seriais de menu
+  Serial.println("=== Sistema Estimulador ===");
+  Serial.println("Comandos:");
+  Serial.println("  START: Liga/Desliga");
+  Serial.println("  MODE: Alterna entre modos");
+  Serial.println("==========================");
 }
 
-
 void loop() {
-  // Atualiza leituras, comandos e indicadores continuamente.
   bateria.update();
+  estimulador.update();
 
+  // Verifica botão START
   if (botaoStart.foiPressionado()) {
     estimulador.alternar();
-
-    Serial.print("Estimulador: ");
-    Serial.println(
-      estimulador.estaLigado() ? "ligado" : "desligado"
-    );
+    if (estimulador.estaLigado()) {
+      ledOn.on();
+    }
   }
 
+  // Verifica botão MODE
   if (botaoMode.foiPressionado()) {
     estimulador.proximoModo();
-
-    Serial.print("Modo ");
-    Serial.print(estimulador.getModo() + 1);
-    Serial.print(" - ");
+    Serial.print("Frequência atual: ");
     Serial.print(estimulador.getFrequencia());
     Serial.println(" Hz");
   }
 
-  if (bateria.estaBaixa()) {
-    // LED verde pisca rapidamente quando a bateria está baixa.
-    ledOn.piscar(INTERVALO_LED_BATERIA);
-  } else {
-    ledOn.on();
-  }
-
+  // Controle dos LEDs
   if (!estimulador.estaLigado()) {
-    // LED vermelho apagado: saída PWM desativada.
+    ledOn.off();
     ledEstim.off();
-  } else if (estimulador.getModo() == 0) {
-    // No modo de 1 Hz, o LED alterna a cada meio período.
-    ledEstim.piscar(INTERVALO_LED_MODO_1);
   } else {
-    // Em 3 kHz o LED não acompanha visualmente; aceso indica o modo ativo.
-    ledEstim.on();
+    // LED ON pisca se bateria estiver baixa
+    if (bateria.estaBaixa()) {
+      ledOn.piscar(INTERVALO_LED_BATERIA);
+    } else {
+      ledOn.on();
+    }
+
+    // LED ESTIM pisca conforme o modo
+    if (estimulador.getModo() == 0) {
+      ledEstim.piscar(INTERVALO_LED_MODO_1);
+    } else {
+      ledEstim.piscar(INTERVALO_LED_MODO_2);
+    }
   }
 
-  // Limita a taxa de atualização do programa.
-  delay(10);
 }
