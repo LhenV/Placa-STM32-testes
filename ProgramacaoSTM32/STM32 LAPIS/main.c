@@ -1,8 +1,8 @@
 /*
  * STM32F411CEU6 - versao C/HAL para STM32CubeIDE.
  *
- * PA9  : botao START, ligado ao GND quando pressionado (pull-up interno)
- * PA10 : botao MODE,  ligado ao GND quando pressionado (pull-up interno)
+ * PA9  : botao START
+ * PA10 : botao MODE  
  * PA15 : LED de sistema
  * PA8  : LED do estimulador
  * PB1  : TIM3_CH4, saida de onda quadrada para o estimulador
@@ -51,6 +51,7 @@ static void MX_ADC1_Init(void);
 static void MX_TIM3_Init(void);
 static void Error_Handler(void);
 
+/* Declarações das funções */
 static bool botaoFoiPressionado(GPIO_TypeDef *porta, uint16_t pino,
                                 GPIO_PinState *estadoAnterior,
                                 uint32_t *ultimoEvento);
@@ -291,7 +292,9 @@ static void MX_GPIO_Init(void) {
 
   GPIO_InitStruct.Pin = PIN_BTN_START | PIN_BTN_MODE;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  // A placa já possui pull-up externo de 10 kΩ para 3,3 V em cada botão.
+  // Com o botão pressionado, o pino é conectado ao GND e lê nível baixo.
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   GPIO_InitStruct.Pin = PIN_LED_ON | PIN_LED_ESTIM;
